@@ -25,6 +25,7 @@
 
 
 (defn draw-random-lines []
+  "I draw lots of circles at random"
   (fill 200)
   (let [
         x-start (random (width))
@@ -72,26 +73,32 @@ Stroke is the line around a primative (i.e. boarder) and the value is the colour
   :size [304 240] )
 
 
+;;Define a new sketch to make something appear
 
-(defapplet draw-me-an-applet        ;;Define a new sketch named example
-  :title "Oh so many grey circles"  ;;Set the title of the sketch
-  :setup setup                      ;;Specify the setup fn
-  :draw draw                        ;;Specify the draw fn
+(defapplet draw-me-an-applet
+  :title "Press my mouse buttons for more circles"
+  :setup setup-circles-medium       ;; Set up the scene 
 
-;  :mouse-clicked handle_click 
-;  :mouse-pressed draw
-;  :mouse-released draw
-  :draw line
-  :size [360 240])                  ;;You struggle to beat the golden ratio
+  ;; Use the mouse to control when the respective drawing function is called 
+  
+;  :mouse-clicked handle_click         ;; trigger after complete click
+  
+  :mouse-pressed  draw-random-circles  ;; Draw one circle at random  
+  :mouse-released draw-random-circles  ;; Draw another circle
+  :size [360 240])                  
 
-;; seem to need a java applet to get mouse positions
+;; Something missing to get the draw function to use the mouse
+;; positions, so we still use random positions in the draw function to
+;; place the circles.
 
 
 
 (defn -main
-  "I don't do a whole lot."
+  "I call any sketches that are defined above."
   [& args]
   (println "Hello, World!")
+
+  ;; A specific call is required for applets, but not for sketches
   (applet-start draw-me-an-applet)
   )
 

@@ -75,13 +75,13 @@ Stroke is the line around a primative (i.e. boarder) and the value is the colour
 
 (defapplet draw-me-an-applet        ;;Define a new sketch named example
   :title "Oh so many grey circles"  ;;Set the title of the sketch
-  :setup setup                      ;;Specify the setup fn
-  :draw draw                        ;;Specify the draw fn
+  :setup setup-circles-medium       ;;Specify the setup fn
+  :draw draw-random-circles         ;;Specify the draw fn
 
 ;  :mouse-clicked handle_click 
 ;  :mouse-pressed draw
 ;  :mouse-released draw
-  :draw line
+;  :draw line
   :size [360 240])                  ;;You struggle to beat the golden ratio
 
 ;; seem to need a java applet to get mouse positions

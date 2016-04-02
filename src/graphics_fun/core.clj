@@ -79,18 +79,17 @@ Stroke is the line around a primative (i.e. boarder) and the value is the colour
   :title "Press my mouse buttons for more circles"
   :setup setup-circles-medium       ;; Set up the scene 
 
-  ;; Use the mouse to control when the respective drawing function is called 
-  
+  ;; Use the mouse to control when the respective drawing function is called
+
 ;  :mouse-clicked handle_click         ;; trigger after complete click
-  
+
   :mouse-pressed  draw-random-circles  ;; Draw one circle at random  
   :mouse-released draw-random-circles  ;; Draw another circle
-  :size [360 240])                  
+  :size [360 240])
 
 ;; Something missing to get the draw function to use the mouse
 ;; positions, so we still use random positions in the draw function to
 ;; place the circles.
-
 
 
 (defn -main
@@ -99,6 +98,4 @@ Stroke is the line around a primative (i.e. boarder) and the value is the colour
   (println "Hello, World!")
 
   ;; A specific call is required for applets, but not for sketches
-  (applet-start draw-me-an-applet)
-  )
-
+  (applet-start draw-me-an-applet))

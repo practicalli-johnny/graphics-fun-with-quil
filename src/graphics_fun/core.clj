@@ -9,6 +9,21 @@
 ;; driving style game
 
 
+;;; Define an atom to hold the ever changing mouse position
+;;; Needs a funtion to set the mouse position!
+(def mouse-position (atom [0 0]))
+
+
+(defn update-mouse-position []
+  "Update the mouse position data from the mouse location (mouse-x, mouse-y) relative to the scene"
+  (let
+      [x (mouse-x)
+       y (mouse-y)]
+    (println (str "Mouse position:" x y))
+    (reset! mouse-position [x y])))
+
+
+
 (defn setup-circles-medium []
   (smooth)                          ;;Turn on anti-aliasing
   (frame-rate 8)                    ;;Set framerate to 1 FPS
@@ -18,7 +33,7 @@
 
 
 (defn flatland []
-  "Defines a very basic scene with the slowest possible drawing interval"
+  "Defines a scene in which to draw in, defining anti-alasing, frame rate and background colour"
   (smooth)
   (frame-rate 1)
   (background 500))
@@ -34,6 +49,17 @@
         y-end   (random (width))]
     (line x-start y-start x-end y-end)))
 
+
+(defn draw-circles-at-mouse-position []
+  "Use the mouse to control where new circles are drawn on the scene"
+
+  (stroke (random 255))
+  (stroke-weight (random 10))
+  (fill (random 200))
+
+  (let [diam (random 100)
+       [mx my] @mouse-position]
+    (ellipse mx my diam diam)))
 
 
 (defn draw-random-circles []
@@ -62,7 +88,7 @@ Stroke is the line around a primative (i.e. boarder) and the value is the colour
 (defsketch a-simple-line
   :title "The sensible one in flat land"
   :setup flatland
-  :draw draw-random-lines 
+  :draw draw-random-lines
   :size [304 240])
 
 
@@ -77,20 +103,13 @@ Stroke is the line around a primative (i.e. boarder) and the value is the colour
 
 (defapplet draw-me-an-applet
   :title "Press my mouse buttons for more circles"
-  :setup setup-circles-medium       ;; Set up the scene 
+  :setup setup-circles-medium       ;; Set up the scene
 
   ;; Use the mouse to control when the respective drawing function is called
-
-;  :mouse-clicked handle_click         ;; trigger after complete click
-
-  :mouse-pressed  draw-random-circles  ;; Draw one circle at random  
+  :mouse-clicked draw-circles-at-mouse-position
+  :mouse-pressed  draw-random-circles  ;; Draw one circle at random
   :mouse-released draw-random-circles  ;; Draw another circle
   :size [360 240])
-
-;; Something missing to get the draw function to use the mouse
-;; positions, so we still use random positions in the draw function to
-;; place the circles.
-
 
 (defn -main
   "I call any sketches that are defined above."
